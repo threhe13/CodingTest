@@ -35,51 +35,38 @@ public class Main {
         int row = Integer.parseInt(st.nextToken());
         int col = Integer.parseInt(st.nextToken());
 
-        int[][] array = new int[size][size];
+        Solution solution = new Solution(row, col);
 
-        Solution solution = new Solution();
-        solution.setArray(array, size);
-
-        int result = solution.printArray(row-1, col-1);
-        System.out.println(result);
-
+        solution.solution(0, 0, size);
     }
 }
 
 class Solution{
 
     int count = 0;
-    int[][] array;
+    int r; int c;
 
-    public void setArray(int[][] array, int size){
-        this.array = array;
-
-        solution(0, 0, size);
+    public Solution(int row, int col){
+        this.r = row;
+        this.c = col;
     }
 
-    public int printArray(int row, int col){
-        return array[row][col];
-    }
-
-
-    public void solution(int row, int col, int size){
-        if(size == 2){
-            for(int i = 0; i < 2; i++){
-                for(int j = 0; j < 2; j++){
-                    array[i][j] = count++;
-                }
+    public void solution(int row, int col, int size) {
+        if (size == 1) {
+            if (row == r && col == c) {
+                System.out.println(count);
             }
+            count++;
+            return;
         }
-        else{
-            int length = size/2;
-            for(int i = 0; i < 2; i++){
-                for(int j = 0; j < 2; j++){
-                    solution(row+length*i, col+length*j, length);
-                }
-            }
+        else {
+            int length = size / 2;
 
+            solution(row, col, length);
+            solution(row, col+length, length);
+            solution(row+length, col, length);
+            solution(row+length, col+length, length);
         }
     }
-
 }
 
